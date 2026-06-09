@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Managed by Ansible</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f7f6; color: #333; text-align: center; padding: 50px; }
+        .card { background: white; max-width: 600px; margin: 0 auto; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #4B0082; }
+        .footer { margin-top: 20px; font-size: 0.8em; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🚀 Automation Successful!</h1>
+        <p>This Nginx web server was deployed and secured using an automated Ansible playbook.</p>
+        <hr style="border: 0; border-top: 1px solid #eee;">
+        <p><strong>Server Hostname:</strong> {{ ansible_hostname }}</p>
+        <p><strong>OS Family:</strong> {{ ansible_os_family }} ({{ ansible_distribution }})</p>
+        <p><strong>Managed By:</strong> {{ server_owner }}</p>
+        <p><strong>Deployment Region:</strong> {{ app_region }}</p>
+        <div class="footer">
+            Generated dynamically via Jinja2 template on {{ ansible_date_time.date }}
+        </div>
+    </div>
+</body>
+</html>

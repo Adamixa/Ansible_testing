@@ -1,0 +1,10 @@
+all:
+  hosts:
+    host1:
+      ansible_host: rhel9.z7rq4.sandbox1427.opentlc.com
+      ansible_user: lab-user
+      ansible_password: ZtfcNt5s9IXF
+    host2:
+      ansible_host: rhel9.vr2gf.sandbox5190.opentlc.com
+      ansible_user: lab-user
+      ansible_password: SHuTuXGBm8iu

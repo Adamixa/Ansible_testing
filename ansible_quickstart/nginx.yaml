@@ -1,0 +1,58 @@
+---
+- name: Deploy a Secure Nginx Web Server on Fedora
+  hosts: all
+  become: true
+  gather_facts: true
+
+  vars:
+    server_owner: "DevOps Team"
+    app_region: "Fedora Environment"
+
+  handlers:
+    - name: Restart Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+  tasks:
+    ## 1. Install Nginx using DNF
+    - name: Install Nginx web server
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
+
+    ## 2. Baseline Security (Firewalld)
+    - name: Ensure firewalld package is installed
+      ansible.builtin.dnf:
+        name: firewalld
+        state: present
+
+    - name: Ensure firewalld is running
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: Allow HTTP traffic through firewalld
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+        immediate: true
+
+    ## 3. Custom Web Page Deployment
+    - name: Deploy dynamic custom index.html
+      ansible.builtin.template:
+        src: index.html.j2
+        dest: /usr/share/nginx/html/index.html  # Fedora's default Nginx root path
+        owner: nginx
+        group: nginx
+        mode: '0644'
+      notify: Restart Nginx
+
+    ## 4. Ensure Service Integrity
+    - name: Ensure Nginx is started and enabled on boot
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
